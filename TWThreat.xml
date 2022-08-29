@@ -1605,209 +1605,29 @@
                         <CheckedTexture file="Interface\Buttons\UI-CheckBox-Check"/>
                         <DisabledCheckedTexture file="Interface\Buttons\UI-CheckBox-Check-Disabled"/>
                     </CheckButton>
-
-
-                    <CheckButton name="TWTMainSettingsTargetFrameGlowPFUI" hidden="false">
+                    
+                    
+                    <Button name="$parentTab3Button" inherits="UIPanelButtonTemplate" text="pfUI Settings" id="3">
+                        <NormalTexture name="$parentNT" file="Interface\addons\TWThreat\images\textures\Smooth"/>
+                        <PushedTexture name="$parentPT" file="Interface\addons\TWThreat\images\textures\Smooth"/>
+                        <HighlightTexture name="$parentHT" file="Interface\addons\TWThreat\images\textures\Smooth"/>
                         <Size>
-                            <AbsDimension x="20" y="20"/>
+                            <AbsDimension x="100" y="20"/>
                         </Size>
                         <Anchors>
                             <Anchor point="TOPLEFT">
                                 <Offset>
-                                    <AbsDimension x="10" y="-80"/>
+                                    <AbsDimension x="100" y="-80"/>
                                 </Offset>
                             </Anchor>
                         </Anchors>
-                        <Layers>
-                            <Layer level="ARTWORK">
-                                <FontString name="$parentLabel" inherits="GameFontNormal"
-                                            text="Target Frame Glow (pfUI)">
-                                    <Anchors>
-                                        <Anchor point="LEFT" relativePoint="RIGHT">
-                                            <Offset>
-                                                <AbsDimension x="1" y="1"/>
-                                            </Offset>
-                                        </Anchor>
-                                    </Anchors>
-                                </FontString>
-                            </Layer>
-                        </Layers>
-                        <Frames>
-                        </Frames>
                         <Scripts>
                             <OnClick>
-                                TWTChangeSetting_OnClick(this:GetChecked(), 'glowPFUI')
+                                TWTSettingsTab_OnClick(this:GetID())
                             </OnClick>
-                            <OnEnter>
-                                GameTooltip:ClearLines();
-                                GameTooltip:SetOwner(this, "ANCHOR_RIGHT", -(this:GetWidth() / 2) + 5, 0);
-                                GameTooltip:AddLine('Glow');
-                                GameTooltip:AddLine('Shows a colored aura ranging from Green/Yellow/Red', 1, 1, 1);
-                                GameTooltip:AddLine('on the pfUI target frame. The color of the aura', 1, 1, 1);
-                                GameTooltip:AddLine('is based on your current threat threshold:', 1, 1, 1);
-                                GameTooltip:AddLine(' green - yellow for 0% - 49%', 1, 1, 1);
-                                GameTooltip:AddLine(' yellow - red for 50% - 100%', 1, 1, 1);
-                                GameTooltip:Show();
-                            </OnEnter>
-                            <OnLeave>
-                                GameTooltip:Hide();
-                            </OnLeave>
                         </Scripts>
-                        <NormalTexture file="Interface\Buttons\UI-CheckBox-Up"/>
-                        <PushedTexture file="Interface\Buttons\UI-CheckBox-Down"/>
-                        <HighlightTexture file="Interface\Buttons\UI-CheckBox-Highlight" alphaMode="ADD"/>
-                        <CheckedTexture file="Interface\Buttons\UI-CheckBox-Check"/>
-                        <DisabledCheckedTexture file="Interface\Buttons\UI-CheckBox-Check-Disabled"/>
-                    </CheckButton>
-
-                    <CheckButton name="TWTMainSettingsPercNumbersPFUI" hidden="false">
-                        <Size>
-                            <AbsDimension x="20" y="20"/>
-                        </Size>
-                        <Anchors>
-                            <Anchor point="TOPLEFT">
-                                <Offset>
-                                    <AbsDimension x="10" y="-110"/>
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Layers>
-                            <Layer level="ARTWORK">
-                                <FontString name="$parentLabel" inherits="GameFontNormal"
-                                            text="Target Frame Threat Percentage (pfUI)">
-                                    <Anchors>
-                                        <Anchor point="LEFT" relativePoint="RIGHT">
-                                            <Offset>
-                                                <AbsDimension x="1" y="1"/>
-                                            </Offset>
-                                        </Anchor>
-                                    </Anchors>
-                                </FontString>
-                            </Layer>
-                        </Layers>
-                        <Frames>
-                        </Frames>
-                        <Scripts>
-                            <OnClick>
-                                TWTChangeSetting_OnClick(this:GetChecked(), 'percPFUI')
-                            </OnClick>
-                            <OnEnter>
-                                GameTooltip:ClearLines();
-                                GameTooltip:SetOwner(this, "ANCHOR_RIGHT", -(this:GetWidth() / 2) + 5, 0);
-                                GameTooltip:AddLine('Percentages');
-                                GameTooltip:AddLine('Shows threat percentages on pfUI target frame.', 1, 1, 1);
-                                GameTooltip:Show();
-                            </OnEnter>
-                            <OnLeave>
-                                GameTooltip:Hide();
-                            </OnLeave>
-                        </Scripts>
-                        <NormalTexture file="Interface\Buttons\UI-CheckBox-Up"/>
-                        <PushedTexture file="Interface\Buttons\UI-CheckBox-Down"/>
-                        <HighlightTexture file="Interface\Buttons\UI-CheckBox-Highlight" alphaMode="ADD"/>
-                        <CheckedTexture file="Interface\Buttons\UI-CheckBox-Check"/>
-                        <DisabledCheckedTexture file="Interface\Buttons\UI-CheckBox-Check-Disabled"/>
-                    </CheckButton>
-
-                    <CheckButton name="TWTMainSettingsPercNumbersPFUItop" hidden="false">
-                        <Size>
-                            <AbsDimension x="20" y="20"/>
-                        </Size>
-                        <Anchors>
-                            <Anchor point="TOPLEFT">
-                                <Offset>
-                                    <AbsDimension x="30" y="-130"/>
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Layers>
-                            <Layer level="ARTWORK">
-                                <FontString name="$parentLabel" inherits="GameFontNormal"
-                                            text="TOP">
-                                    <Anchors>
-                                        <Anchor point="LEFT" relativePoint="RIGHT">
-                                            <Offset>
-                                                <AbsDimension x="1" y="1"/>
-                                            </Offset>
-                                        </Anchor>
-                                    </Anchors>
-                                </FontString>
-                            </Layer>
-                        </Layers>
-                        <Frames>
-                        </Frames>
-                        <Scripts>
-                            <OnClick>
-                                TWTChangeSetting_OnClick(this:GetChecked(), 'percPFUItop')
-                            </OnClick>
-                            <OnEnter>
-                                GameTooltip:ClearLines();
-                                GameTooltip:SetOwner(this, "ANCHOR_RIGHT", -(this:GetWidth() / 2) + 5, 0);
-                                GameTooltip:AddLine('Anchor TOP');
-<!--                                GameTooltip:AddLine('Shows threat percentages on the default target frame.', 1, 1, 1);-->
-                                GameTooltip:Show();
-                            </OnEnter>
-                            <OnLeave>
-                                GameTooltip:Hide();
-                            </OnLeave>
-                        </Scripts>
-                        <NormalTexture file="Interface\Buttons\UI-CheckBox-Up"/>
-                        <PushedTexture file="Interface\Buttons\UI-CheckBox-Down"/>
-                        <HighlightTexture file="Interface\Buttons\UI-CheckBox-Highlight" alphaMode="ADD"/>
-                        <CheckedTexture file="Interface\Buttons\UI-CheckBox-Check"/>
-                        <DisabledCheckedTexture file="Interface\Buttons\UI-CheckBox-Check-Disabled"/>
-                    </CheckButton>
-
-                    <CheckButton name="TWTMainSettingsPercNumbersPFUIbottom" hidden="false">
-                        <Size>
-                            <AbsDimension x="20" y="20"/>
-                        </Size>
-                        <Anchors>
-                            <Anchor point="TOPLEFT">
-                                <Offset>
-                                    <AbsDimension x="90" y="-130"/>
-                                </Offset>
-                            </Anchor>
-                        </Anchors>
-                        <Layers>
-                            <Layer level="ARTWORK">
-                                <FontString name="$parentLabel" inherits="GameFontNormal"
-                                            text="BOTTOM">
-                                    <Anchors>
-                                        <Anchor point="LEFT" relativePoint="RIGHT">
-                                            <Offset>
-                                                <AbsDimension x="1" y="1"/>
-                                            </Offset>
-                                        </Anchor>
-                                    </Anchors>
-                                </FontString>
-                            </Layer>
-                        </Layers>
-                        <Frames>
-                        </Frames>
-                        <Scripts>
-                            <OnClick>
-                                TWTChangeSetting_OnClick(this:GetChecked(), 'percPFUIbottom')
-                            </OnClick>
-                            <OnEnter>
-                                GameTooltip:ClearLines();
-                                GameTooltip:SetOwner(this, "ANCHOR_RIGHT", -(this:GetWidth() / 2) + 5, 0);
-                                GameTooltip:AddLine('Anchor BOTTOM');
-                                <!--                                GameTooltip:AddLine('Shows threat percentages on the default target frame.', 1, 1, 1);-->
-                                GameTooltip:Show();
-                            </OnEnter>
-                            <OnLeave>
-                                GameTooltip:Hide();
-                            </OnLeave>
-                        </Scripts>
-                        <NormalTexture file="Interface\Buttons\UI-CheckBox-Up"/>
-                        <PushedTexture file="Interface\Buttons\UI-CheckBox-Down"/>
-                        <HighlightTexture file="Interface\Buttons\UI-CheckBox-Highlight" alphaMode="ADD"/>
-                        <CheckedTexture file="Interface\Buttons\UI-CheckBox-Check"/>
-                        <DisabledCheckedTexture file="Interface\Buttons\UI-CheckBox-Check-Disabled"/>
-                    </CheckButton>
-
-
+                    </Button>
+                    
                     <CheckButton name="TWTMainSettingsFullScreenGlow" hidden="false">
                         <Size>
                             <AbsDimension x="20" y="20"/>

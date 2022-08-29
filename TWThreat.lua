@@ -434,10 +434,6 @@ function TWT.init()
     TWT_CONFIG.windowScale = TWT_CONFIG.windowScale or 1
     TWT_CONFIG.glow = TWT_CONFIG.glow or false
     TWT_CONFIG.perc = TWT_CONFIG.perc or false
-    TWT_CONFIG.glowPFUI = TWT_CONFIG.glowPFUI or false
-    TWT_CONFIG.percPFUI = TWT_CONFIG.percPFUI or false
-    TWT_CONFIG.percPFUItop = TWT_CONFIG.percPFUItop or false
-    TWT_CONFIG.percPFUIbottom = TWT_CONFIG.percPFUIbottom or false
     TWT_CONFIG.showInCombat = TWT_CONFIG.showInCombat or false
     TWT_CONFIG.hideOOC = TWT_CONFIG.hideOOC or false
     TWT_CONFIG.font = TWT_CONFIG.font or 'Roboto'
@@ -459,6 +455,10 @@ function TWT.init()
     TWT_CONFIG.combatAlpha = TWT_CONFIG.combatAlpha or 1
     TWT_CONFIG.oocAlpha = TWT_CONFIG.oocAlpha or 1
 
+    if pfUI then
+        TWT.pfUIIntegration()
+    end
+
     if TWT.class ~= 'paladin' and TWT.class ~= 'warrior' and TWT.class ~= 'druid' then
         _G['TWTMainSettingsTankMode']:Disable()
         TWT_CONFIG.tankMode = false
@@ -466,6 +466,7 @@ function TWT.init()
 
     TWT_CONFIG.debug = TWT_CONFIG.debug or false
 
+        
     if TWT_CONFIG.visible then
         _G['TWTMain']:Show()
     else
@@ -506,6 +507,7 @@ function TWT.init()
     _G['TWTMainSettingsPercNumbersPFUI']:SetChecked(TWT_CONFIG.percPFUI)
     _G['TWTMainSettingsPercNumbersPFUItop']:SetChecked(TWT_CONFIG.percPFUItop)
     _G['TWTMainSettingsPercNumbersPFUIbottom']:SetChecked(TWT_CONFIG.percPFUIbottom)
+    _G['TWTMainSettingsDockPFUI']:SetChecked(TWT_CONFIG.dockPFUI)
     _G['TWTMainSettingsShowInCombat']:SetChecked(TWT_CONFIG.showInCombat)
     _G['TWTMainSettingsHideOOC']:SetChecked(TWT_CONFIG.hideOOC)
     _G['TWTMainSettingsFullScreenGlow']:SetChecked(TWT_CONFIG.fullScreenGlow)
@@ -602,6 +604,7 @@ function TWT.init()
     TWT.updateSettingsTabs(1)
 
     TWT.checkTargetFrames()
+    
 
     twtprint(TWT.addonName .. ' |cffabd473v' .. TWT.addonVer .. '|cffffffff loaded.')
     return true
@@ -2354,4 +2357,73 @@ function TWT.sendMyVersion()
     SendAddonMessage(TWT.prefix, "TWTVersion:" .. TWT.addonVer, "GUILD")
     SendAddonMessage(TWT.prefix, "TWTVersion:" .. TWT.addonVer, "RAID")
     SendAddonMessage(TWT.prefix, "TWTVersion:" .. TWT.addonVer, "BATTLEGROUND")
+end
+
+
+function TWT.pfUIIntegration()
+    pfUI:RegisterModule("TurtleWoWThreat", "vanilla", function ()
+        print("asdfasdfaasdfafsd")
+        local rawborder, default_border = GetBorderSize()
+        pfUI.gui.dropdowns.TWT_perc_positions = {
+            "top:" .. T["Top"],
+            "bottom:" .. T["Bottom"]
+            
+        }
+        
+        pfUI.gui.CreateGUIEntry(T["Thirdparty"], T["Turtle WoW Threat"], function()
+            pfUI.gui.CreateConfig(nil, "Place meter in Chat Dock", C.thirdparty.TurtleWoWThreat, "dock", "checkbox")
+            pfUI.gui.CreateConfig(TWTChangeSetting_OnClick(true, 'glowPFUI'), "Target Frame Glow", C.TurtleWoWThreat, "glow", "checkbox")
+            pfUI.gui.CreateConfig(TWTChangeSetting_OnClick(true, 'percPFUI'), "Target Frame Threat Percentage", C.TurtleWoWThreat, "perc", "checkbox")
+            pfUI.gui.CreateConfig(TWTChangeSetting_OnClick(true, 'percPFUIpos'), "Target Frame Threat Percentage Position", C.TurtleWoWThreat, "perc_pos", "dropdown", pfUI.gui.dropdowns.TWT_perc_positions)
+        end)
+        print("Based");
+        pfUI:UpdateConfig("thirdparty", "TurtleWoWThreat", "dock", 0)
+        pfUI:UpdateConfig("TurtleWoWThreat", nil, "perc_pos", "top")
+        
+        TWT_CONFIG.glowPFUI = C.TurtleWoWThreat["glow"]
+        TWT_CONFIG.percPFUI = C.TurtleWoWThreat["perc"]
+--         TWT_CONFIG.percPFUItop = TWT_CONFIG.percPFUItop or false
+--         TWT_CONFIG.percPFUIbottom = TWT_CONFIG.percPFUIbottom or false
+        
+        local docktable = { "TurtleWoWThreat", "TWThreat", "TWTMain",
+            function() -- single
+                TWTMain:ClearAllPoints()
+                TWTMain:SetPoint("TOPLEFT", pfUI.chat.right, "TOPLEFT", -3, 2)
+                TWTMain:SetPoint("BOTTOMRIGHT", pfUI.chat.right, "BOTTOMRIGHT", 1, pfUI.panel.right:GetHeight())
+                TWT.windowWidth = pfUI.panel.right:GetWidth()
+                TWT.windowStartWidth = pfUI.panel.right:GetWidth()
+                TWTMainMainWindow_Resized()
+                TWTTankModeWindowChangeStick_OnClick('Top')
+                _G['TWTMainLockButton']:SetNormalTexture('Interface\\addons\\TWThreat\\images\\icon_locked')
+--                 TWTMain.backdrop:SetPoint("BOTTOMRIGHT", KLHTM_Frame, "BOTTOMRIGHT", 0, -(KLHTM_Frame:GetBottom() - pfUI.chat.right:GetBottom())-default_border)
+            end,
+            function() -- dual
+                TWTMain:ClearAllPoints()
+                TWTMain:SetPoint("TOPLEFT", pfUI.chat.right, "TOPLEFT", -1, 2)
+                TWTMain:SetPoint("BOTTOMRIGHT", pfUI.chat.right, "BOTTOM", -default_border, pfUI.panel.right:GetHeight() + 4)
+                TWT.windowWidth = pfUI.panel.right:GetWidth() / 2
+                TWT.windowStartWidth = pfUI.panel.right:GetWidth() / 2
+                TWTMainMainWindow_Resized()
+                TWTTankModeWindowChangeStick_OnClick('Top')
+                _G['TWTMainLockButton']:SetNormalTexture('Interface\\addons\\TWThreat\\images\\icon_locked')
+--                 TWTMain.backdrop:SetPoint("BOTTOMRIGHT", KLHTM_Frame, "BOTTOMRIGHT", 0, -(KLHTM_Frame:GetBottom() - pfUI.chat.right:GetBottom())-default_border)
+            end,
+            function() -- show
+                _G['TWTMain']:Show()
+                TWT_CONFIG.visible = true
+            end,
+            function() -- hide
+                _G['TWTMain']:Hide()
+                TWT_CONFIG.visible = false
+            end,
+            function() -- once
+
+            end
+        }
+        pfUI.thirdparty.meters:RegisterMeter("threat", docktable)        
+    end)
+    
+--     pfUI.gui:Show()
+--     pfUI.gui.frames["Thirdparty"]:Click()
+--     pfUI.gui.frames["Thirdparty"]["Turtle WoW Threat"]:Click()
 end
